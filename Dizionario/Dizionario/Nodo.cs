@@ -10,6 +10,27 @@ namespace Dizionario
         private bool _parola;
         private List<string> _definizioni;
         
+        public string sezione
+        {
+            get { return _sezione; }
+            set { _sezione = value; }
+        }
+        public List<Nodo> successivi
+        {
+            get { return _successivi; }
+            set { _successivi = value; }
+        }
+        public bool parola
+        {
+            get { return _parola; }
+            set { _parola = value; }
+        }
+        public List<string> definizioni
+        {
+            get { return _definizioni; }
+            set { _definizioni = value; }
+        }
+        
         public Nodo(string sezione, bool parola)
         {
             this._sezione = sezione;

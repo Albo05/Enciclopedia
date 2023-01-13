@@ -39,9 +39,11 @@ namespace Dizionario
                 {
                     string riga = sr.ReadLine();
                     bool inserita = false;
-                    foreach (Nodo nodo in root.)
+                    string parola = riga.Split(',')[1];
+                    Nodo dove = root;
+                    while (inserita)
                     {
-                        
+                        //if(dove.)
                     }
                 }
             }
