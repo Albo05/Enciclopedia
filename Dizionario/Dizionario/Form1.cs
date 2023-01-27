@@ -24,8 +24,7 @@ namespace Dizionario
         //definizioni con avanti-> e <-indietro; nel caso invece non esistesse la aggiungo e mostro un'unica definizione vuota che
         //l'utente dovrà riempire, il nodo non verrà abilitato a parola
         //Quando chiudo il file scorro tutto il mio albero, rimuovendo i nodi man mano, per salvare le parole nei vari file
-
-        private Nodo root = new Nodo("root", false);
+        
         public Form1()
         {
             InitializeComponent();
@@ -33,6 +32,14 @@ namespace Dizionario
 
         public void caricaParole() //vado a caricare le parole dal file di testo 
         {
+            //nome programma: gugol translate
+            
+            //creare una finestra degli errori dove vengono visualizzati eventuali errori nel carivamento del file
+            
+            //premi cerca per visualizzare una tra le nostre {numero di parole nell'albero} parole
+            
+            //quando creo un nuovo nodo prendendo i dati dal file devo ricordarmi di porre la variabile booleana di controllo "parola" come "true"
+            
             using (StreamReader sr = new StreamReader("dizionario.txt"))
             {
                 while (!sr.EndOfStream)
@@ -40,7 +47,6 @@ namespace Dizionario
                     string riga = sr.ReadLine();
                     bool inserita = false;
                     string parola = riga.Split(',')[1];
-                    Nodo dove = root;
                     while (inserita)
                     {
                         //if(dove.)
