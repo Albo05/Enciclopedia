@@ -40,6 +40,8 @@ namespace Dizionario
             
             //quando creo un nuovo nodo prendendo i dati dal file devo ricordarmi di porre la variabile booleana di controllo "parola" come "true"
             
+            //quando cerco una parola devo guardare se il dodo restituito ha la sezione vuota o piena, se vuota vuol dire che non esiste
+            
             using (StreamReader sr = new StreamReader("dizionario.txt"))
             {
                 while (!sr.EndOfStream)

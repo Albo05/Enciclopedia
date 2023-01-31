@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Dizionario
 {
@@ -60,18 +61,25 @@ namespace Dizionario
             List<Nodo> livello = Root.Successivi;
             while (!inserito)
             {
-                int dove = Contiene(livello, n);
+                int dove = Contiene(livello, n.Sezione);
                 if(dove == -1)
                 {
+                    int sezioneDove = Contiene(livello, n.Sezione.Substring(IdentificaLivello(livello)));
                     if (livello[0].Livello >= n.Sezione.Length)
                     {
                         inserito = true;
                         livello.Add(n);
+                        n.Livello = livello[0].Livello;
+                    }
+                    else if (sezioneDove != -1)
+                    {
+                        livello = livello[sezioneDove].Successivi;
                     }
                     else
                     {
                         Nodo appoAggiungi = new Nodo(n.Sezione.Substring(IdentificaLivello(livello)), false, IdentificaLivello(livello));
                         livello.Add(appoAggiungi);
+                        livello = livello.Last().Successivi;
                     }
                 }
                 else
@@ -83,10 +91,10 @@ namespace Dizionario
             }
         }
 
-        public static int Contiene(List<Nodo> nodi, Nodo n)
+        public static int Contiene(List<Nodo> nodi, String n)
         {
             int livello = nodi[0].Livello;
-            string daControllare = n.Sezione.Substring(livello);
+            string daControllare = n;
             for (int i = 0; i < nodi.Count; i++)
                 if(nodi[i].Sezione == daControllare)
                     return i;
@@ -107,6 +115,37 @@ namespace Dizionario
                 default:
                     return Int32.MaxValue;
             }
+        }
+        
+        public Nodo Cerca(string s)
+        {
+            Nodo n = new Nodo(s, false , 0);
+            List<Nodo> livello = Root.Successivi;
+            while (true)
+            {
+                int dove = Contiene(livello, n.Sezione);
+                if(dove == -1)
+                {
+                    int sezioneDove = Contiene(livello, n.Sezione.Substring(IdentificaLivello(livello)));
+                    if (sezioneDove != -1)
+                    {
+                        livello = livello[sezioneDove].Successivi;
+                    }
+                    else
+                    {
+                        return new Nodo("", false, 0);
+                    }
+                }
+                else
+                {
+                    return livello[dove];
+                }
+            }
+        }
+
+        public void stampaTutti()
+        {
+            
         }
     }
 }
