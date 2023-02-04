@@ -143,9 +143,20 @@ namespace Dizionario
             }
         }
 
-        public void stampaTutti()
+        public static List<Nodo> TuttiFuori(Albero alberello)
         {
-            
+            List<Nodo> nodi = new List<Nodo>();
+            Stack<Nodo> stack = new Stack<Nodo>();
+            stack.Push(alberello.Root);
+            while (stack.Count > 0)
+            {
+                Nodo n = stack.Pop();
+                if (n.Parola)
+                    nodi.Add(n);
+                foreach (Nodo nodo in n.Successivi)
+                    stack.Push(nodo);
+            }
+            return nodi;
         }
     }
 }

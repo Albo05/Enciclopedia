@@ -25,6 +25,9 @@ namespace Dizionario
         //l'utente dovrà riempire, il nodo non verrà abilitato a parola
         //Quando chiudo il file scorro tutto il mio albero, rimuovendo i nodi man mano, per salvare le parole nei vari file
         
+        Albero giovanni = new Albero();
+        private bool italiano = true;
+        
         public Form1()
         {
             InitializeComponent();
@@ -32,29 +35,74 @@ namespace Dizionario
 
         public void caricaParole() //vado a caricare le parole dal file di testo 
         {
-            //nome programma: gugol translate
+            //nome programma: gugol transleight
             
-            //creare una finestra degli errori dove vengono visualizzati eventuali errori nel carivamento del file
-            
-            //premi cerca per visualizzare una tra le nostre {numero di parole nell'albero} parole
-            
-            //quando creo un nuovo nodo prendendo i dati dal file devo ricordarmi di porre la variabile booleana di controllo "parola" come "true"
+            //creare una finestra degli errori dove vengono visualizzati eventuali errori nel caricamento del file
             
             //quando cerco una parola devo guardare se il dodo restituito ha la sezione vuota o piena, se vuota vuol dire che non esiste
             
-            using (StreamReader sr = new StreamReader("dizionario.txt"))
+            List<Nodo> nodi = new List<Nodo>();
+            if (File.Exists("dizionario.txt"))
             {
-                while (!sr.EndOfStream)
+                using (StreamReader sr = new StreamReader("dizionario.txt"))
+                            {
+                                while (!sr.EndOfStream)
+                                {
+                                    string[] stringa = sr.ReadLine().Split(';');
+                                    nodi.Add(new Nodo(stringa[0], true, 0));
+                                    for (int i = 1; i < stringa.Length; i++)
+                                        nodi[nodi.Count - 1].AggiungiDefinizione(stringa[i]);
+                                }
+                            }
+            }
+            else
+            {
+                //converti un file binario di stringhe in un file di testo
+            }
+            giovanni.CreaAlbero(nodi.ToArray());
+        }
+
+        public void traduciAlbero()
+        {
+            List<Nodo> paroleItaliane = Albero.TuttiFuori(giovanni);
+            List<Nodo> paroleInglese = new List<Nodo>();
+            foreach (Nodo ita in paroleItaliane)
+            {
+                bool inserita = false;
+                foreach (Nodo eng in paroleInglese)
                 {
-                    string riga = sr.ReadLine();
-                    bool inserita = false;
-                    string parola = riga.Split(',')[1];
-                    while (inserita)
+                    if(ita.Definizioni.Contains(eng.Sezione))
+                        eng.Definizioni.Add(ita.Sezione);
+                    else
                     {
-                        //if(dove.)
+                        paroleInglese.Add(new Nodo(ita.Sezione, true, 0));
+                        paroleInglese.Last().Definizioni.Add(ita.Sezione);
                     }
                 }
             }
+            giovanni.CreaAlbero(paroleInglese.ToArray());
+            italiano = !italiano;
         }
+
+        public void SalvaParoleInFileDiTesto()
+        {
+            if(!italiano)
+                traduciAlbero();
+            using (StreamWriter sw = new StreamWriter("dizionario.txt"))
+            {
+                List<Nodo> nodi = Albero.TuttiFuori(giovanni);
+                foreach (Nodo n in nodi)
+                {
+                    sw.Write(n.Sezione);
+                    foreach (string s in n.Definizioni)
+                    {
+                        sw.Write(";" + s);
+                    }
+                    sw.WriteLine();
+                }
+            }
+        }
+        
+        //converti il file di testo in un file binario da usare come backup
     }
 }
