@@ -79,6 +79,16 @@ namespace Dizionario
             }
             return false;
         }
+        
+        public string DefinizioniToString()
+        {
+            string stringa = "";
+            foreach (var a in _traduzioni)
+            {
+                stringa +="- " + a + "\n";
+            }
+            return stringa;
+        }
 
         public override string ToString()
         {
