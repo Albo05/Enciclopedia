@@ -156,6 +156,8 @@ namespace Dizionario
                 foreach (Nodo nodo in n.Successivi)
                     stack.Push(nodo);
             }
+
+            Console.WriteLine("ciao");
             return nodi;
         }
     }

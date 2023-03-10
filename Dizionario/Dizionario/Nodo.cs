@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Dizionario
@@ -99,6 +100,7 @@ namespace Dizionario
             }
             stringa += "\n";
             return stringa;
+            Console.WriteLine("ciao");
         }
     }
 }

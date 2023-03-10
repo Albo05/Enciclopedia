@@ -101,6 +101,8 @@ namespace Dizionario
                     sw.WriteLine();
                 }
             }
+
+            Console.WriteLine("ciao");
         }
         
         //converti il file di testo in un file binario da usare come backup
